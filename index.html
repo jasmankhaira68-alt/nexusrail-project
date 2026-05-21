@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexusRail | Premium Transit</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-main: #FAF9F6;
+            --bg-card: #FFFFFF;
+            --text-dark: #2C1E16;
+            --text-muted: #8A4A4A;
+            --accent-primary: #8B0000;
+            --accent-hover: #5C0000;
+            --border-light: rgba(139, 0, 0, 0.12);
+        }
+
+        * {
+            box-sizing: border-box;
+            font-style: normal !important;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-main);
+            background-image: linear-gradient(to bottom, rgba(250, 249, 246, 0.88), rgba(250, 249, 246, 0.96)), url('https://images.unsplash.com/photo-1532105956626-9569c03602f6?auto=format&fit=crop&q=80&w=1600');
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center top;
+            color: var(--text-dark);
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+        }
+
+        h1, h2, h3, .brand {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(10px);
+            padding: 1.2rem 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--accent-primary);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 10px 30px rgba(139, 0, 0, 0.04);
+        }
+
+        .brand {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--accent-primary);
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+            padding: 0.5rem 0;
+            transition: all 0.3s ease;
+            position: relative;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-btn::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            bottom: -4px;
+            left: 0;
+            background-color: var(--accent-primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            color: var(--accent-primary);
+        }
+
+        .nav-btn.active::after {
+            width: 100%;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 5rem 1rem 3rem;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            color: var(--accent-primary);
+            margin-bottom: 0.8rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-dark);
+            max-width: 650px;
+            margin: 0 auto;
+            font-weight: 500;
+            line-height: 1.6;
+        }
+
+        #app-root {
+            max-width: 1100px;
+            margin: 0 auto 5rem;
+            padding: 0 2rem;
+        }
+
+        .search-container-box {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 3rem;
+            border-radius: 16px;
+            box-shadow: 0 20px 50px rgba(139, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.02);
+            border: 1px solid var(--border-light);
+            backdrop-filter: blur(8px);
+        }
+
+        .search-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 2rem;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        label {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+        }
+
+        input, select {
+            padding: 1.1rem;
+            background: var(--bg-main);
+            border: 1px solid rgba(139, 0, 0, 0.2);
+            border-radius: 8px;
+            color: var(--text-dark);
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            width: 100%;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            background: var(--bg-card);
+            box-shadow: 0 0 0 4px rgba(139, 0, 0, 0.08);
+        }
+
+        .btn {
+            padding: 1.1rem 2.2rem;
+            background: var(--accent-primary);
+            color: var(--bg-card);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            letter-spacing: 0.8px;
+            transition: all 0.3s ease;
+            margin-top: auto;
+            text-transform: uppercase;
+            box-shadow: 0 4px 12px rgba(139, 0, 0, 0.15);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--accent-primary);
+            border: 2px solid var(--accent-primary);
+            box-shadow: none;
+        }
+
+        .btn:hover:not(:disabled) {
+            background: var(--accent-hover);
+            color: var(--bg-card);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(139, 0, 0, 0.25);
+        }
+
+        .btn-outline:hover:not(:disabled) {
+            background: var(--accent-primary);
+            color: var(--bg-card);
+        }
+
+        .btn:disabled {
+            background: #e1dbd6;
+            color: #a0958e;
+            border: 1px solid #d0c5bd;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+
+        .platform-banner {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 1.8rem 3rem;
+            border-radius: 12px;
+            margin-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px dashed var(--accent-primary);
+            box-shadow: 0 8px 25px rgba(139, 0, 0, 0.03);
+        }
+
+        .platform-banner h3 {
+            font-size: 1.4rem;
+            margin: 0 0 0.4rem 0;
+            color: var(--accent-primary);
+        }
+
+        .platform-banner p {
+            margin: 0;
+            color: var(--text-dark);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .train-card {
+            background: rgba(255, 255, 255, 0.96);
+            padding: 2.2rem;
+            margin-top: 1.8rem;
+            border-radius: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 8px solid var(--accent-primary);
+            box-shadow: 0 8px 30px rgba(139, 0, 0, 0.04);
+            transition: all 0.3s ease;
+            border-top: 1px solid rgba(139, 0, 0, 0.03);
+            border-right: 1px solid rgba(139, 0, 0, 0.03);
+            border-bottom: 1px solid rgba(139, 0, 0, 0.03);
+        }
+
+        .train-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 35px rgba(139, 0, 0, 0.1);
+        }
+
+        .train-info h3 {
+            margin: 0 0 0.6rem 0;
+            font-size: 1.6rem;
+            color: var(--accent-primary);
+            letter-spacing: -0.3px;
+        }
+
+        .train-info p {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .train-price {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .train-price h2 {
+            margin: 0 0 0.6rem 0;
+            font-size: 2.2rem;
+            color: var(--text-dark);
+            font-weight: 800;
+        }
+
+        .status-badge {
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 0.4rem 0.9rem;
+            border-radius: 6px;
+            margin-bottom: 0.6rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .status-available {
+            background: #fff5f5;
+            color: var(--accent-primary);
+            border: 1px solid var(--accent-primary);
+        }
+
+        .status-unavailable {
+            background: var(--accent-primary);
+            color: var(--bg-card);
+        }
+
+        .status-loader {
+            text-align: center;
+            padding: 5rem;
+            color: var(--accent-primary);
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            animation: breathe 2s infinite ease-in-out;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem;
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(44, 30, 22, 0.7);
+            backdrop-filter: blur(6px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: var(--bg-card);
+            padding: 3.5rem;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 540px;
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.25);
+            border-top: 10px solid var(--accent-primary);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            color: var(--accent-primary);
+            font-size: 2.2rem;
+            font-weight: 800;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 2.5rem;
+            font-weight: 400;
+            cursor: pointer;
+            color: var(--accent-primary);
+            line-height: 1;
+        }
+
+        .payment-fields {
+            margin-top: 1rem;
+            padding: 1.8rem;
+            background: var(--bg-main);
+            border-radius: 10px;
+            border: 1px solid rgba(139, 0, 0, 0.1);
+            display: none;
+        }
+
+        .payment-fields.active {
+            display: block;
+        }
+
+        .faq-item {
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(139, 0, 0, 0.12);
+            border-radius: 10px;
+            margin-bottom: 1.2rem;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(139, 0, 0, 0.02);
+        }
+
+        .faq-question {
+            padding: 1.6rem;
+            margin: 0;
+            cursor: pointer;
+            color: var(--accent-primary);
+            font-family: 'Inter', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--bg-card);
+        }
+
+        .faq-answer {
+            padding: 0 1.6rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            background: var(--bg-main);
+            color: var(--text-dark);
+            line-height: 1.7;
+            font-weight: 500;
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 1.6rem;
+            max-height: 500px;
+            border-top: 1px solid rgba(139, 0, 0, 0.1);
+        }
+
+        .map-wrapper-layout {
+            background: rgba(255, 255, 255, 0.96);
+            padding: 3rem;
+            border-radius: 16px;
+            border: 1px solid var(--border-light);
+            box-shadow: 0 20px 50px rgba(139, 0, 0, 0.06);
+        }
+
+        .map-instruction {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .map-vector-canvas {
+            width: 100%;
+            height: auto;
+            max-height: 650px;
+            background: #FAF9F6;
+            border-radius: 12px;
+            border: 1px solid rgba(139, 0, 0, 0.15);
+        }
+
+        .map-node-station {
+            cursor: pointer;
+        }
+
+        .map-node-station circle {
+            fill: #FFFFFF;
+            stroke: var(--accent-primary);
+            stroke-width: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .map-node-station:hover circle {
+            fill: var(--accent-primary);
+            r: 12;
+            filter: drop-shadow(0 4px 10px rgba(139,0,0,0.4));
+        }
+
+        .map-node-station text {
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            fill: var(--text-dark);
+            transition: all 0.3s ease;
+        }
+
+        .map-node-station:hover text {
+            fill: var(--accent-primary);
+            font-size: 13px;
+        }
+
+        .map-track-line {
+            stroke: var(--text-muted);
+            stroke-width: 3px;
+            stroke-dasharray: 8, 4;
+        }
+
+        .dashboard-header-panel {
+            border-bottom: 2px solid var(--accent-primary);
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.2rem;
+        }
+
+        .dashboard-header-panel h2 {
+            color: var(--accent-primary);
+            font-size: 2.6rem;
+            margin: 0;
+            font-weight: 900;
+        }
+
+        @keyframes breathe {
+            0% { opacity: 0.4; transform: scale(0.99); }
+            50% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0.4; transform: scale(0.99); }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="brand">NexusRail</div>
+        <div class="nav-links">
+            <button id="nav-search" class="nav-btn active">Find Journey</button>
+            <button id="nav-map" class="nav-btn">Network Map</button>
+            <button id="nav-bookings" class="nav-btn">My Bookings</button>
+            <button id="nav-help" class="nav-btn">Help & Support</button>
+        </div>
+    </nav>
+
+    <div class="hero" id="hero-section">
+        <h1>Elevate Your Transit</h1>
+        <p>Experience the pinnacle of intercity rail travel across the national network.</p>
+    </div>
+
+    <main id="app-root"></main>
+
+    <script>
+        const createElement = (tag, props = {}, ...children) => {
+            const el = document.createElement(tag);
+            Object.entries(props).forEach(([key, value]) => {
+                if (key === 'className') el.className = value;
+                else if (key === 'textContent') el.textContent = value;
+                else if (value !== null && value !== undefined) el.setAttribute(key, value);
+            });
+            children.forEach(child => {
+                if (typeof child === 'string') el.appendChild(document.createTextNode(child));
+                else el.appendChild(child);
+            });
+            return el;
+        };
+
+        let state = {
+            bookings: JSON.parse(localStorage.getItem('nexus_bookings')) || [],
+            currentSearchData: [],
+            currentSearchDate: ''
+        };
+
+        const saveBooking = (record) => {
+            state.bookings.unshift(record);
+            localStorage.setItem('nexus_bookings', JSON.stringify(state.bookings));
+        };
+
+        const generateDynamicTrains = (from, to) => {
+            const prefixes = ['Vande Bharat Express', 'Rajdhani Premium', 'Shatabdi Elite', 'Duronto Fast', 'Tejas Superfast', 'Garib Rath', 'Superfast Express', 'Premium Intercity'];
+            const generated = [];
+            
+            const formatCity = (city) => city.charAt(0).toUpperCase() + city.slice(1).toLowerCase();
+            const formattedFrom = formatCity(from);
+            const formattedTo = formatCity(to);
+
+            for(let i=0; i<10; i++) {
+                const h1 = Math.floor(Math.random() * 24);
+                const m1 = Math.floor(Math.random() * 60);
+                const h2 = (h1 + Math.floor(Math.random() * 12) + 2) % 24;
+                const m2 = Math.floor(Math.random() * 60);
+                
+                const pad = n => n.toString().padStart(2, '0');
+                
+                generated.push({
+                    id: `NX-${Math.floor(Math.random() * 900 + 100)}`,
+                    name: prefixes[Math.floor(Math.random() * prefixes.length)],
+                    from: formattedFrom,
+                    to: formattedTo,
+                    dep: `${pad(h1)}:${pad(m1)}`,
+                    arr: `${pad(h2)}:${pad(m2)}`,
+                    fare: Math.floor(Math.random() * 3000 + 500),
+                    status: Math.random() > 0.3 ? 'AVAILABLE' : 'UNAVAILABLE'
+                });
+            }
+            return generated;
+        };
+
+        const fetchTrains = (searchQuery) => {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    const { from, to } = searchQuery;
+                    const results = generateDynamicTrains(from, to);
+                    state.currentSearchData = results;
+                    resolve(results);
+                }, 1500);
+            });
+        };
+
+        const root = document.getElementById('app-root');
+        const hero = document.getElementById('hero-section');
+
+        const renderSearchUI = () => {
+            hero.style.display = 'block';
+            hero.querySelector('h1').textContent = 'Elevate Your Transit';
+            hero.querySelector('p').textContent = "Experience the pinnacle of intercity rail travel across the national network.";
+            root.innerHTML = ''; 
+            
+            const formContainer = createElement('div', { className: 'search-container-box' });
+            
+            const form = createElement('form', { className: 'search-form', id: 'train-search-form' },
+                createElement('div', { className: 'input-group' },
+                    createElement('label', { textContent: 'Departure City' }),
+                    createElement('input', { type: 'text', id: 'src', placeholder: 'Enter Origin City', required: 'true' })
+                ),
+                createElement('div', { className: 'input-group' },
+                    createElement('label', { textContent: 'Arrival City' }),
+                    createElement('input', { type: 'text', id: 'dest', placeholder: 'Enter Destination City', required: 'true' })
+                ),
+                createElement('div', { className: 'input-group' },
+                    createElement('label', { textContent: 'Date of Travel' }),
+                    createElement('input', { type: 'date', id: 'date', required: 'true' })
+                ),
+                createElement('button', { type: 'submit', className: 'btn', textContent: 'Check Availability' })
+            );
+
+            const platformBanner = createElement('div', { className: 'platform-banner' },
+                createElement('div', {},
+                    createElement('h3', { textContent: 'Station Access Only?' }),
+                    createElement('p', { textContent: 'Purchase a valid pass to enter the premium lounge and platforms.' })
+                ),
+                createElement('button', { className: 'btn btn-outline', id: 'btn-open-platform', textContent: 'Get Platform Ticket' })
+            );
+
+            const resultsContainer = createElement('div', { id: 'results-container' });
+            
+            formContainer.appendChild(form);
+            root.appendChild(formContainer);
+            root.appendChild(platformBanner);
+            root.appendChild(resultsContainer);
+        };
+
+        const renderTrainResults = (trains) => {
+            const container = document.getElementById('results-container');
+            container.innerHTML = ''; 
+
+            const routeHeader = createElement('h2', { textContent: 'Available Journeys', style: 'color: var(--accent-primary); margin-top: 3.5rem; font-size: 2.4rem; font-weight:900;' });
+            container.appendChild(routeHeader);
+
+            const trainNodes = trains.map(train => {
+                const isAvailable = train.status === 'AVAILABLE';
+                
+                const btnProps = { 
+                    className: 'btn book-btn', 
+                    'data-id': train.id, 
+                    textContent: isAvailable ? 'Reserve Seat' : 'Sold Out'
+                };
+                
+                if (!isAvailable) {
+                    btnProps.disabled = 'true';
+                }
+
+                return createElement('div', { className: 'train-card' },
+                    createElement('div', { className: 'train-info' },
+                        createElement('h3', { textContent: `${train.name}` }),
+                        createElement('p', { textContent: `${train.id} | ${train.from} to ${train.to}` }),
+                        createElement('p', { textContent: `Departs: ${train.dep} | Arrives: ${train.arr}`, style: 'font-weight: 700; margin-top: 0.6rem; color: var(--text-dark);' })
+                    ),
+                    createElement('div', { className: 'train-price' },
+                        createElement('span', { 
+                            className: isAvailable ? 'status-badge status-available' : 'status-badge status-unavailable', 
+                            textContent: train.status 
+                        }),
+                        createElement('h2', { textContent: `₹${train.fare.toLocaleString('en-IN')}` }),
+                        createElement('button', btnProps)
+                    )
+                );
+            });
+
+            trainNodes.forEach(node => container.appendChild(node));
+        };
+
+        const generatePaymentForm = (formId, submitText) => {
+            const form = createElement('form', { id: formId, style: 'display: flex; flex-direction: column; gap: 1.2rem;' });
+            
+            form.appendChild(createElement('div', { className: 'input-group' },
+                createElement('label', { textContent: 'Name for Booking' }),
+                createElement('input', { type: 'text', id: `${formId}-name`, required: 'true', placeholder: 'Enter full name' })
+            ));
+
+            form.appendChild(createElement('div', { className: 'input-group' },
+                createElement('label', { textContent: 'Contact Details (10 Digits)' }),
+                createElement('input', { type: 'text', id: `${formId}-contact`, required: 'true', pattern: '\\d{10}', placeholder: 'Enter 10 digit mobile number', title: 'Must be exactly 10 digits' })
+            ));
+
+            form.appendChild(createElement('div', { className: 'input-group' },
+                createElement('label', { textContent: 'Number of Passengers' }),
+                createElement('input', { type: 'number', id: `${formId}-count`, required: 'true', min: '1', max: '6', value: '1' })
+            ));
+
+            const paymentSelect = createElement('select', { id: `${formId}-payment-method`, required: 'true' },
+                createElement('option', { value: '', textContent: 'Select Payment Method', disabled: 'true', selected: 'true' }),
+                createElement('option', { value: 'upi', textContent: 'UPI (Unified Payments Interface)' }),
+                createElement('option', { value: 'debit', textContent: 'Debit Card' }),
+                createElement('option', { value: 'credit', textContent: 'Credit Card' })
+            );
+
+            form.appendChild(createElement('div', { className: 'input-group' },
+                createElement('label', { textContent: 'Payment Options' }),
+                paymentSelect
+            ));
+
+            const upiFields = createElement('div', { className: 'payment-fields', id: `${formId}-fields-upi` },
+                createElement('label', { textContent: 'Enter UPI ID' }),
+                createElement('input', { type: 'text', placeholder: 'username@bank', id: `${formId}-input-upi` })
+            );
+
+            const cardFields = createElement('div', { className: 'payment-fields', id: `${formId}-fields-card` },
+                createElement('label', { textContent: 'Enter Card Number' }),
+                createElement('input', { type: 'text', placeholder: '16 digit card number', pattern: '\\d{16}', id: `${formId}-input-card`, title: 'Must be exactly 16 digits' })
+            );
+
+            form.appendChild(upiFields);
+            form.appendChild(cardFields);
+
+            const submitBtn = createElement('button', { type: 'submit', className: 'btn', textContent: submitText, style: 'margin-top: 1rem;' });
+            form.appendChild(submitBtn);
+
+            paymentSelect.addEventListener('change', (e) => {
+                upiFields.classList.remove('active');
+                cardFields.classList.remove('active');
+                document.getElementById(`${formId}-input-upi`).removeAttribute('required');
+                document.getElementById(`${formId}-input-card`).removeAttribute('required');
+
+                if (e.target.value === 'upi') {
+                    upiFields.classList.add('active');
+                    document.getElementById(`${formId}-input-upi`).setAttribute('required', 'true');
+                } else if (e.target.value === 'debit' || e.target.value === 'credit') {
+                    cardFields.classList.add('active');
+                    document.getElementById(`${formId}-input-card`).setAttribute('required', 'true');
+                }
+            });
+
+            return form;
+        };
+
+        const renderPlatformModal = () => {
+            const overlay = createElement('div', { className: 'modal-overlay', id: 'platform-modal' });
+            const modalContent = createElement('div', { className: 'modal-content' },
+                createElement('div', { className: 'modal-header' },
+                    createElement('h2', { textContent: 'Platform Pass' }),
+                    createElement('button', { className: 'close-btn', textContent: '×', id: 'close-platform-btn' })
+                ),
+                createElement('p', { textContent: 'Valid for 2 hours from issuance. Fare: ₹50 per person.', style: 'font-weight: 700; color: var(--text-dark); margin-bottom: 1.5rem;' })
+            );
+
+            const form = generatePaymentForm('platform-form', 'Pay ₹50');
+            
+            form.insertBefore(createElement('div', { className: 'input-group' },
+                createElement('label', { textContent: 'Station Name' }),
+                createElement('input', { type: 'text', id: 'platform-station', required: 'true', placeholder: 'Enter Station' })
+            ), form.firstChild);
+
+            form.insertBefore(createElement('div', { className: 'input-group' },
+                createElement('label', { textContent: 'Date of Visit' }),
+                createElement('input', { type: 'date', id: 'platform-date', required: 'true' })
+            ), form.children[1]);
+
+            modalContent.appendChild(form);
+            overlay.appendChild(modalContent);
+            document.body.appendChild(overlay);
+
+            document.getElementById('close-platform-btn').addEventListener('click', () => {
+                document.body.removeChild(overlay);
+            });
+
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const station = document.getElementById('platform-station').value;
+                const date = document.getElementById('platform-date').value;
+                const count = document.getElementById('platform-form-count').value;
+                const totalFare = 50 * parseInt(count);
+                
+                const passRecord = {
+                    id: `PASS-${Math.floor(Math.random() * 90000 + 10000)}`,
+                    name: 'Premium Platform Pass',
+                    from: station,
+                    to: 'Platform Terminal Access',
+                    dep: 'Valid for 2 Hours',
+                    arr: 'N/A',
+                    fare: totalFare,
+                    travelDate: date
+                };
+
+                saveBooking(passRecord);
+                document.body.removeChild(overlay);
+                showSuccessModal(passRecord);
+            });
+        };
+
+        const renderModal = (train) => {
+            const overlay = createElement('div', { className: 'modal-overlay', id: 'booking-modal' });
+            const modalContent = createElement('div', { className: 'modal-content' },
+                createElement('div', { className: 'modal-header' },
+                    createElement('h2', { textContent: 'Secure Reservation' }),
+                    createElement('button', { className: 'close-btn', textContent: '×', id: 'close-modal-btn' })
+                ),
+                createElement('p', { textContent: `Journey: ${train.name} (${train.from} to ${train.to})`, style: 'font-weight: 700; color: var(--accent-primary); margin-bottom: 0.5rem; font-size:1.1rem;' }),
+                createElement('p', { textContent: `Date: ${state.currentSearchDate || new Date().toISOString().split('T')[0]}`, style: 'font-weight: 700; color: var(--text-dark); margin-bottom: 1.8rem;' })
+            );
+
+            const form = generatePaymentForm('booking-form', `Pay ₹${train.fare.toLocaleString('en-IN')}`);
+            
+            form.querySelector('#booking-form-count').addEventListener('input', (e) => {
+                const count = parseInt(e.target.value) || 1;
+                const newFare = train.fare * count;
+                form.querySelector('button[type="submit"]').textContent = `Pay ₹${newFare.toLocaleString('en-IN')}`;
+            });
+
+            modalContent.appendChild(form);
+            overlay.appendChild(modalContent);
+            document.body.appendChild(overlay);
+
+            document.getElementById('close-modal-btn').addEventListener('click', () => {
+                document.body.removeChild(overlay);
+            });
+
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const count = parseInt(document.getElementById('booking-form-count').value) || 1;
+                const bookingRecord = { 
+                    ...train, 
+                    travelDate: state.currentSearchDate || new Date().toISOString().split('T')[0],
+                    fare: train.fare * count,
+                    passengers: count
+                };
+                saveBooking(bookingRecord);
+                document.body.removeChild(overlay);
+                showSuccessModal(bookingRecord);
+            });
+        };
+
+        const showSuccessModal = (record) => {
+            const overlay = createElement('div', { className: 'modal-overlay', id: 'success-modal' });
+            const modalContent = createElement('div', { className: 'modal-content', style: 'text-align: center;' },
+                createElement('h2', { textContent: 'Transaction Successful', style: 'color: var(--accent-primary); font-size: 2.4rem; margin-bottom: 1.2rem; font-weight:900;' }),
+                createElement('p', { textContent: `Your transaction for ${record.name} is fully secured.`, style: 'font-size: 1.15rem; font-weight: 700; margin-bottom: 2.5rem;' }),
+                createElement('button', { className: 'btn', textContent: 'View Itinerary', id: 'btn-view-bookings' })
+            );
+
+            overlay.appendChild(modalContent);
+            document.body.appendChild(overlay);
+
+            document.getElementById('btn-view-bookings').addEventListener('click', () => {
+                document.body.removeChild(overlay);
+                document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+                document.getElementById('nav-bookings').classList.add('active');
+                renderBookingsUI();
+            });
+        };
+
+        const executeMapStationSelection = (stationName) => {
+            state.currentSearchDate = new Date().toISOString().split('T')[0];
+            const overlay = createElement('div', { className: 'modal-overlay', id: 'map-results-modal' });
+            
+            const modalContent = createElement('div', { className: 'modal-content', style: 'max-width: 750px;' },
+                createElement('div', { className: 'modal-header' },
+                    createElement('h2', { textContent: `Trains to ${stationName}` }),
+                    createElement('button', { className: 'close-btn', textContent: '×', id: 'close-map-modal-btn' })
+                ),
+                createElement('p', { textContent: 'Showing operations arriving at this destination from regional hubs today.', style: 'margin-bottom: 1.5rem; font-weight: 600; color: var(--text-muted);' })
+            );
+
+            const generatedTrains = generateDynamicTrains('Regional Hub', stationName);
+            state.currentSearchData = generatedTrains;
+
+            const listContainer = createElement('div', { style: 'max-height: 55vh; overflow-y: auto; padding-right: 0.5rem;' });
+
+            generatedTrains.forEach(train => {
+                const isAvailable = train.status === 'AVAILABLE';
+                const card = createElement('div', { className: 'train-card', style: 'margin-top: 1rem; padding: 1.5rem;' },
+                    createElement('div', { className: 'train-info' },
+                        createElement('h3', { textContent: train.name, style: 'font-size: 1.3rem;' }),
+                        createElement('p', { textContent: `${train.id} | From: ${train.from}` }),
+                        createElement('p', { textContent: `Arrives: ${train.arr}`, style: 'margin-top: 0.4rem; font-weight:700; color: var(--text-dark);' })
+                    ),
+                    createElement('div', { className: 'train-price' },
+                        createElement('span', { 
+                            className: isAvailable ? 'status-badge status-available' : 'status-badge status-unavailable', 
+                            textContent: train.status 
+                        }),
+                        createElement('h2', { textContent: `₹${train.fare}`, style: 'font-size: 1.6rem; margin-bottom: 0.4rem;' }),
+                        createElement('button', {
+                            className: 'btn book-btn',
+                            'data-id': train.id,
+                            textContent: isAvailable ? 'Reserve' : 'Sold Out',
+                            disabled: !isAvailable ? 'true' : undefined,
+                            style: 'padding: 0.6rem 1.2rem; font-size: 0.9rem;'
+                        })
+                    )
+                );
+                listContainer.appendChild(card);
+            });
+
+            modalContent.appendChild(listContainer);
+            overlay.appendChild(modalContent);
+            document.body.appendChild(overlay);
+
+            document.getElementById('close-map-modal-btn').addEventListener('click', () => {
+                document.body.removeChild(overlay);
+            });
+
+            listContainer.addEventListener('click', (e) => {
+                if (e.target.matches('.book-btn') && !e.target.disabled) {
+                    const trainId = e.target.getAttribute('data-id');
+                    const targetTrain = state.currentSearchData.find(t => t.id === trainId);
+                    if (targetTrain) {
+                        document.body.removeChild(overlay);
+                        renderModal(targetTrain);
+                    }
+                }
+            });
+        };
+
+        const renderMapUI = () => {
+            hero.style.display = 'block';
+            hero.querySelector('h1').textContent = 'National Network Map';
+            hero.querySelector('p').textContent = 'Click on any core railway station node below to explore and book real-time operations directly.';
+            root.innerHTML = '';
+
+            const wrapper = createElement('div', { className: 'map-wrapper-layout' });
+            
+            const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            svg.setAttribute('viewBox', '0 0 1000 700');
+            svg.setAttribute('className', 'map-vector-canvas');
+
+            const tracks = [
+                { x1: 500, y1: 120, x2: 360, y2: 380 },
+                { x1: 500, y1: 120, x2: 640, y2: 160 },
+                { x1: 500, y1: 120, x2: 860, y2: 260 },
+                { x1: 360, y1: 380, x2: 440, y2: 560 },
+                { x1: 860, y1: 260, x2: 540, y2: 600 },
+                { x1: 440, y1: 560, x2: 540, y2: 600 },
+                { x1: 360, y1: 380, x2: 520, y2: 460 },
+                { x1: 520, y1: 460, x2: 540, y2: 600 },
+                { x1: 500, y1: 120, x2: 520, y2: 460 }
+            ];
+
+            tracks.forEach(t => {
+                const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                line.setAttribute('x1', t.x1);
+                line.setAttribute('y1', t.y1);
+                line.setAttribute('x2', t.x2);
+                line.setAttribute('y2', t.y2);
+                line.setAttribute('class', 'map-track-line');
+                svg.appendChild(line);
+            });
+
+            const stations = [
+                { name: 'Delhi', x: 500, y: 120, tx: 515, ty: 115 },
+                { name: 'Mumbai', x: 360, y: 380, tx: 290, ty: 385 },
+                { name: 'Lucknow', x: 640, y: 160, tx: 655, ty: 155 },
+                { name: 'Kolkata', x: 860, y: 260, tx: 875, ty: 265 },
+                { name: 'Hyderabad', x: 520, y: 460, tx: 535, ty: 455 },
+                { name: 'Bangalore', x: 440, y: 560, tx: 360, ty: 565 },
+                { name: 'Chennai', x: 540, y: 600, tx: 555, ty: 605 }
+            ];
+
+            stations.forEach(s => {
+                const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+                g.setAttribute('class', 'map-node-station');
+                g.setAttribute('data-name', s.name);
+
+                const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                circle.setAttribute('cx', s.x);
+                circle.setAttribute('cy', s.y);
+                circle.setAttribute('r', '9');
+
+                const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                text.setAttribute('x', s.tx);
+                text.setAttribute('y', s.ty);
+                text.textContent = s.name;
+
+                g.appendChild(circle);
+                g.appendChild(text);
+                svg.appendChild(g);
+
+                g.addEventListener('click', () => {
+                    executeMapStationSelection(s.name);
+                });
+            });
+
+            wrapper.appendChild(svg);
+            root.appendChild(wrapper);
+        };
+
+        const renderBookingsUI = () => {
+            hero.style.display = 'none';
+            root.innerHTML = '';
+            
+            const headerContainer = createElement('div', { className: 'dashboard-header-panel' },
+                createElement('h2', { textContent: 'My Bookings' })
+            );
+            root.appendChild(headerContainer);
+
+            if (state.bookings.length === 0) {
+                root.appendChild(createElement('div', { className: 'empty-state' },
+                    createElement('p', { textContent: 'Your itinerary is currently empty.' })
+                ));
+                return;
+            }
+
+            const totalSpent = state.bookings.reduce((total, ticket) => total + ticket.fare, 0);
+            
+            const summaryCard = createElement('div', { className: 'train-card', style: 'background: var(--accent-primary); color: var(--bg-card); border: none;' },
+                createElement('div', { className: 'train-info' },
+                    createElement('h3', { textContent: 'Account Summary', style: 'color: var(--bg-card);' }),
+                    createElement('p', { textContent: `${state.bookings.length} Confirmed Record(s)`, style: 'color: var(--bg-main); opacity: 0.9;' })
+                ),
+                createElement('div', { className: 'train-price' },
+                    createElement('h2', { textContent: `₹${totalSpent.toLocaleString('en-IN')}`, style: 'color: var(--bg-card);' })
+                )
+            );
+            root.appendChild(summaryCard);
+
+            const listHeader = createElement('h3', { textContent: 'Your Itinerary', style: 'margin-top: 3rem; color: var(--text-dark); font-size: 1.8rem; font-weight:800;' });
+            root.appendChild(listHeader);
+
+            state.bookings.forEach(ticket => {
+                const ticketCard = createElement('div', { className: 'train-card' },
+                    createElement('div', { className: 'train-info' },
+                        createElement('h3', { textContent: `${ticket.name} (${ticket.id})` }),
+                        createElement('p', { textContent: `${ticket.from} to ${ticket.to}` }),
+                        createElement('p', { textContent: `Date: ${ticket.travelDate}`, style: 'margin-top: 0.6rem; color: var(--text-dark); font-weight:700;' }),
+                        createElement('p', { textContent: `Departure: ${ticket.dep}`, style: 'margin-top: 0.2rem;' })
+                    ),
+                    createElement('div', { className: 'train-price' },
+                        createElement('p', { textContent: 'STATUS: CONFIRMED', style: 'color: var(--accent-primary); font-weight: 800; margin-bottom: 0.6rem; letter-spacing: 1px; font-size:0.85rem;' }),
+                        createElement('p', { textContent: `Paid: ₹${ticket.fare.toLocaleString('en-IN')}`, style: 'font-weight: 800; color: var(--text-dark); font-size: 1.3rem;' })
+                    )
+                );
+                root.appendChild(ticketCard);
+            });
+        };
+
+        const renderHelpUI = () => {
+            hero.style.display = 'block';
+            hero.querySelector('h1').textContent = 'Help & Support';
+            hero.querySelector('p').textContent = 'Find answers to your questions and learn more about our premium services.';
+            root.innerHTML = '';
+
+            const faqs = [
+                { q: 'How to pay?', a: 'NexusRail offers a highly secure payment gateway. During the reservation process, you will be prompted to select a payment method. You can choose UPI and enter your VPA (Virtual Payment Address), or choose Credit/Debit card and enter your 16-digit card number. All transactions are encrypted end-to-end on our secure servers.' },
+                { q: 'How to track my train?', a: 'You can track your train directly from the "My Bookings" section. Once a journey is confirmed, your itinerary will feature live integration with the national transit grid, updating your departure and arrival times automatically in case of any network delays or priority rerouting.' },
+                { q: 'What is the cancellation policy?', a: 'Premium tickets can be cancelled up to 4 hours before the scheduled departure time for a full refund minus a minimal processing fee. Cancellations made within 4 hours of departure are strictly non-refundable to maintain network efficiency.' },
+                { q: 'How does the Platform Pass work?', a: 'The Premium Platform Pass grants you access to the station platforms and premium waiting lounges without needing a travel ticket. It is strictly valid for 2 hours from the chosen date of visit. It does not permit boarding any trains.' }
+            ];
+
+            const faqContainer = createElement('div', { style: 'margin-top: 2.5rem;' });
+
+            faqs.forEach(faq => {
+                const item = createElement('div', { className: 'faq-item' });
+                const question = createElement('h3', { className: 'faq-question', textContent: faq.q });
+                const answer = createElement('div', { className: 'faq-answer', textContent: faq.a });
+
+                question.addEventListener('click', () => {
+                    const isActive = item.classList.contains('active');
+                    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+                    if (!isActive) {
+                        item.classList.add('active');
+                    }
+                });
+
+                item.appendChild(question);
+                item.appendChild(answer);
+                faqContainer.appendChild(item);
+            });
+
+            root.appendChild(faqContainer);
+        };
+
+        root.addEventListener('click', (e) => {
+            if (e.target.matches('.book-btn') && !e.target.disabled) {
+                const trainId = e.target.getAttribute('data-id');
+                const train = state.currentSearchData.find(t => t.id === trainId);
+                if(train) {
+                    renderModal(train);
+                }
+            }
+            if (e.target.id === 'btn-open-platform') {
+                renderPlatformModal();
+            }
+        });
+
+        root.addEventListener('submit', (e) => {
+            if (e.target.id === 'train-search-form') {
+                e.preventDefault(); 
+                const from = document.getElementById('src').value.trim();
+                const to = document.getElementById('dest').value.trim();
+                const date = document.getElementById('date').value;
+
+                state.currentSearchDate = date;
+
+                const container = document.getElementById('results-container');
+                container.innerHTML = '';
+                container.appendChild(createElement('div', { className: 'status-loader', textContent: 'Querying Network Database...' }));
+
+                fetchTrains({ from, to }).then(results => renderTrainResults(results));
+            }
+        });
+
+        const handleNav = (targetId, renderFunc) => {
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(targetId).classList.add('active');
+            renderFunc();
+        };
+
+        document.getElementById('nav-search').addEventListener('click', () => handleNav('nav-search', renderSearchUI));
+        document.getElementById('nav-map').addEventListener('click', () => handleNav('nav-map', renderMapUI));
+        document.getElementById('nav-bookings').addEventListener('click', () => handleNav('nav-bookings', renderBookingsUI));
+        document.getElementById('nav-help').addEventListener('click', () => handleNav('nav-help', renderHelpUI));
+
+        document.addEventListener('DOMContentLoaded', renderSearchUI);
+    </script>
+</body>
+</html>
